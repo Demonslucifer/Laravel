@@ -8,6 +8,9 @@
  */
 
 define('LARAVEL_START', microtime(true));
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE, PATCH');
 
 /*
 |--------------------------------------------------------------------------
