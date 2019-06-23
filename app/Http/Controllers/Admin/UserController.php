@@ -11,7 +11,7 @@ class UserController extends Controller
     private $_pagesize = 2;
 
     public function __construct() {
-        $this->_pagesize = config('page.pagesize');
+//        $this->_pagesize = config('page.pagesize');
     }
 
 

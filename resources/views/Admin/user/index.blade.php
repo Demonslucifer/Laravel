@@ -4,19 +4,20 @@
 @section('title','首页')
 @section('css')
     <style>
-        .form-inline{
+        .form-inline {
             float: left;
         }
-        .text-right{
+
+        .text-right {
             margin-bottom: 10px;
         }
     </style>
 @endsection
 @section('cnt')
-<div>
-    <h1>用户管理</h1>
+    <div>
+        <h1>用户管理</h1>
 
-</div>
+    </div>
     <div class="text-right">
 
         <form class="form-inline" action="{{route('Admin.index.list')}}">
@@ -25,6 +26,7 @@
         </form>
         <a class="btn btn-danger" href="{{route('Admin.index.huishou')}}">回收站</a>
         <a class="btn badge-success" href="{{route('Admin.index.create')}}">添加用户</a>
+        <a class="btn btn-danger" href="{{route('Admin.Login.index')}}">退出</a>
     </div>
 
     <table class="table table-bordered">
@@ -60,7 +62,7 @@
         @endforelse
         </tbody>
     </table>
-{{ $list->appends(request()->except(['page']))->links() }}
+    {{ $list->appends(request()->except(['page']))->links() }}
     <a class="btn btn-danger alldel" href="{{route('Admin.index.del',['id'=>1])}}">全部删除</a>
 
 @endsection
