@@ -33,6 +33,7 @@
         <thead>
         <th><input type="checkbox" class="checkbox-inline" onclick="checkAll(this)"></th>
         <th>ID</th>
+        <th>头像</th>
         <th>用户名</th>
         <th>真实姓名</th>
         <th>邮箱</th>
@@ -45,6 +46,7 @@
             <tr>
                 <td><input type="checkbox" class="check" name="item[]" value="{{ $val->id }}" id=""></td>
                 <td>{{$val->id}}</td>
+                <td><img src="{{$val->image}}" width="120px" alt=""></td>
                 <td>{{$val->username}}</td>
                 <td>{{$val->truename}}</td>
                 <td>{{$val->email}}</td>

@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     private $_pagesize = 2;
 
-    public function __construct() {
+    public function __construct()
+    {
 //        $this->_pagesize = config('page.pagesize');
     }
 
@@ -18,8 +19,8 @@ class UserController extends Controller
     public function list(Request $request)
     {
         $data = $request->get('sch');
-        $list = User::when($data,function ($query) use ($data){
-            $query->where('username','like',"%{$data}%");
+        $list = User::when($data, function ($query) use ($data) {
+            $query->where('username', 'like', "%{$data}%");
         })->paginate($this->_pagesize);
 //        dump($list);
         return view('Admin.user.index', compact('list'));
@@ -29,52 +30,62 @@ class UserController extends Controller
     {
         return view('Admin.user.create');
     }
+
     public function add(Request $request)
     {
-        $post =$this->validate($request, [
+        $post = $this->validate($request, [
             'username' => 'required|unique:user,username',
             'truename' => 'required',
             'password' => 'required',
             'email' => 'nullable|email',
             'qq' => 'required|max:11'
         ]);
+//        $pic = '/uploads/nameijiang.jpg';
+//            if($request->hasFile('image')){
+//                $file = $request->file('image');
+//                $ext = $file->getClientOriginalExtension();
+//                $fileName = time().'.'.$ext;
+//                $ret = $file->move(public_path('uploads'),$fileName);
+//                $pic = '/uploads/'.$fileName;
+//            }
+//            $post['images']=$pic;
 //         $request->except(['_token']);
 //        $post['createtime'] = time();
 //        $post['tel'] = (int)$post['tel'];
         User::create($post);
 
-        return redirect(route('Admin.index.list'))->with('success','创建成功');
+        return redirect(route('Admin.index.list'))->with('success', '创建成功');
     }
 
     public function update(int $id)
     {
-        $info = User::where('id',$id)->first();
-        return view('Admin.user.update',compact('info'));
+        $info = User::where('id', $id)->first();
+        return view('Admin.user.update', compact('info'));
     }
 
     public function edit(Request $request, int $id)
     {
-        $post=$this->validate($request, [
+        $post = $this->validate($request, [
             'username' => 'required|unique:users,username,' . $id,
             'truename' => 'required',
             'email' => 'nullable|email',
             'qq' => 'required|max:11'
         ]);
 
-        User::where('id',$id)->update($post);
+        User::where('id', $id)->update($post);
 //        DB::table('user')->where('id', $id)->update($post);
-        return redirect(route('Admin.index.list'))->with('success','修改成功');
+        return redirect(route('Admin.index.list'))->with('success', '修改成功');
     }
 
     public function del(Request $request, int $id)
     {
 //        dump($request->get('ids'));exit;
-        if($request->get('ids')){
+        if ($request->get('ids')) {
             $ids = $request->get('ids');
 //            dump($ids);
             User::destroy($ids);
             return ['status' => 101, 'msg' => '删除成功'];
-        }else{
+        } else {
             User::destroy($id);
 
             return ['status' => 100, 'msg' => '删除成功'];
@@ -88,14 +99,14 @@ class UserController extends Controller
         return view('Admin.user.huishou', compact('list'));
     }
 
-    public function huifu(Request $request,int $id)
+    public function huifu(Request $request, int $id)
     {
-        if($request->get('ids')){
+        if ($request->get('ids')) {
             $ids = $request->get('ids');
 //            dump($ids);
-            User::onlyTrashed()->wherein('id',$ids)->get()->restore();
+            User::onlyTrashed()->wherein('id', $ids)->get()->restore();
             return ['status' => 101, 'msg' => '恢复成功'];
-        }else {
+        } else {
             User::onlyTrashed()->find($id)->restore();
             return ['status' => 100, 'msg' => '恢复成功'];
         }
@@ -104,6 +115,19 @@ class UserController extends Controller
     public function logout()
     {
         session()->flush();
-        return redirect(route('Admin.Login.index'))->with('success','退出成功');
+        return redirect(route('Admin.Login.index'))->with('success', '退出成功');
+    }
+
+    public function upfile(Request $request)
+    {
+        $pic = '/uploads/nameijiang.jpg';
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $ext;
+            $ret = $file->move(public_path('uploads'), $fileName);
+            $pic = '/uploads/' . $fileName;
+        }
+        return ['status'=>0,'pic'=>$pic];
     }
 }

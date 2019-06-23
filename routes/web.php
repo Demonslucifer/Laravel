@@ -28,6 +28,7 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::get('user/create', 'UserController@create')->name('Admin.index.create');
         Route::get('logout', 'UserController@logout')->name('Admin.logout');
         Route::post('user/create', 'UserController@add')->name('Admin.index.create');
+        Route::post('user/upfile', 'UserController@upfile')->name('Admin.index.file');
         Route::get('user/update/{id}', 'UserController@update')->name('Admin.index.update')->where(['id' => '\d+']);
         Route::put('user/update/{id}', 'UserController@edit')->name('Admin.index.update')->where(['id' => '\d+']);
         Route::delete('user/del/{id}', 'UserController@del')->name('Admin.index.del')->where(['id' => '\d+']);
