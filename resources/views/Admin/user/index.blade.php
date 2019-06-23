@@ -26,7 +26,7 @@
         </form>
         <a class="btn btn-danger" href="{{route('Admin.index.huishou')}}">回收站</a>
         <a class="btn badge-success" href="{{route('Admin.index.create')}}">添加用户</a>
-        <a class="btn btn-danger" href="{{route('Admin.Login.index')}}">退出</a>
+        <a class="btn btn-danger" href="{{route('Admin.logout')}}">退出</a>
     </div>
 
     <table class="table table-bordered">
@@ -52,7 +52,8 @@
                 <td>{{$val->created_at}}</td>
                 <td>
                     <a class="btn btn-primary" href="{{route('Admin.index.update',['id'=>$val->id])}}">修改</a>
-                    <a class="btn btn-danger del" href="{{route('Admin.index.del',['id'=>$val->id])}}">删除</a>
+                    {{--<a class="btn btn-danger del" href="{{route('Admin.index.del',['id'=>$val->id])}}">删除</a>--}}
+                    {!! $val->delBtn() !!}
                 </td>
             </tr>
         @empty

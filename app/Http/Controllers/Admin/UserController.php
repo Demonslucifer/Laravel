@@ -100,4 +100,10 @@ class UserController extends Controller
             return ['status' => 100, 'msg' => '恢复成功'];
         }
     }
+
+    public function logout()
+    {
+        session()->flush();
+        return redirect(route('Admin.Login.index'))->with('success','退出成功');
+    }
 }

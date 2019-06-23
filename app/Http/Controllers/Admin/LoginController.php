@@ -10,6 +10,9 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if(session()->has('admin.user')){
+            return redirect(route('Admin.index.list'));
+        }
         return view('admin.login.index');
     }
 
@@ -18,6 +21,7 @@ class LoginController extends Controller
        $post = $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
+            'vcode'=>'required|captcha'
         ]);
 //       dump($post);
         $res = User::where('username',$post['username'])->first();

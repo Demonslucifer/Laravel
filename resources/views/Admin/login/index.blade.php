@@ -23,6 +23,12 @@
                     <span class="log_error"></span>
                 </div>
                 <div>
+                    <span class="log_name">验证码:</span>
+                    <input type="text" name="vcode" class="ipt" id="vcode" placeholder="请输入验证码">
+                    <img src="{{captcha_src('mini')}}" alt="">
+                    <span class="log_error"></span>
+                </div>
+                <div>
                     <a href="{{route('Admin.Login.index')}}"  class="log" id="log">
                         登录
                     </a>
@@ -60,6 +66,14 @@
             } else {
                 $('#pwd').next().html('');
             }
+            var vcode = $('#vcode').val();
+            if(vcode == ''){
+                flag = false;
+                $('#vcode').next().next().html('验证码不能为空');
+            }else{
+                $('#vcode').next().next().html('');
+            }
+
             let url = $(this).attr('href');
 
             if(flag){
